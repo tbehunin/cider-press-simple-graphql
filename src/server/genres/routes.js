@@ -3,7 +3,8 @@ const router = express.Router();
 
 router.get('/', function (req, res) {
     const genres = req.app.get('genres');
-    res.send(genres);
+    const name = req.query.name;
+    res.send(genres.filter(item => (!name || item.name.toLowerCase().indexOf(name.toLowerCase()) !== -1)));
 });
 
 router.get('/:id', function (req, res) {

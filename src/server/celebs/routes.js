@@ -3,7 +3,8 @@ const router = express.Router();
 
 router.get('/', function (req, res) {
     const celebs = req.app.get('celebs');
-    res.send(celebs);
+    const name = req.query.name;
+    res.send(celebs.filter(item => (!name || item.name.toLowerCase().indexOf(name.toLowerCase()) !== -1)));
 });
 
 router.get('/:id', function (req, res) {

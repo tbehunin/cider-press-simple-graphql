@@ -3,7 +3,9 @@ const router = express.Router();
 
 router.get('/', function (req, res) {
     const movies = req.app.get('movies');
-    res.send(movies.filter(item => item.year === 2018));
+    const year = req.query.year && parseInt(req.query.year, 10);
+    const title = req.query.title;
+    res.send(movies.filter(item => (!year || item.year === year) && (!title || item.title.toLowerCase().indexOf(title.toLowerCase()) !== -1)));
 });
 
 router.get('/:id', function (req, res) {
