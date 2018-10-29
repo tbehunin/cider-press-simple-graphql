@@ -4,7 +4,11 @@ const router = express.Router();
 router.get('/', function (req, res) {
     const celebs = req.app.get('celebs');
     const name = req.query.name;
-    res.send(celebs.filter(item => (!name || item.name.toLowerCase().indexOf(name.toLowerCase()) !== -1)));
+    const celebIds = (req.query.celebIds || '').split(',').map(id => parseInt(id));
+    res.send(celebs.filter(item =>
+        (!name || item.name.toLowerCase().indexOf(name.toLowerCase()) !== -1) &&
+        (celebIds.length === 0 || celebIds.find(id => id === item.id))
+    ));
 });
 
 router.get('/:id', function (req, res) {
