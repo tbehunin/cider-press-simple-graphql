@@ -6,7 +6,7 @@ const BASE_URL = 'http://localhost:4000/api';
 
 const schema = new GraphQLObjectType({
     name: 'Genre',
-    fields: {
+    fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
         // movies: {
@@ -25,6 +25,6 @@ const schema = new GraphQLObjectType({
         //             .then(response => response.json());
         //     },
         // },
-    },
+    }),
 });
 module.exports = schema;

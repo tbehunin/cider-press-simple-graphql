@@ -5,7 +5,12 @@ router.get('/', function (req, res) {
     const movies = req.app.get('movies');
     const year = req.query.year && parseInt(req.query.year, 10);
     const title = req.query.title;
-    res.send(movies.filter(item => (!year || item.year === year) && (!title || item.title.toLowerCase().indexOf(title.toLowerCase()) !== -1)));
+    const movieIds = (req.query.movieIds || '').split(',').map(id => parseInt(id));
+    res.send(movies.filter(item =>
+        (!year || item.year === year) &&
+        (!title || item.title.toLowerCase().indexOf(title.toLowerCase()) !== -1) &&
+        (movieIds.length === 0 || movieIds.find(id => id === item.id))
+    ));
 });
 
 router.get('/:id', function (req, res) {

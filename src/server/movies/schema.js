@@ -8,7 +8,7 @@ const BASE_URL = 'http://localhost:4000/api';
 
 const schema = new GraphQLObjectType({
     name: 'Movie',
-    fields: {
+    fields: () => ({
         id: { type: GraphQLID },
         title: { type: GraphQLString },
         year: { type: GraphQLInt },
@@ -28,6 +28,6 @@ const schema = new GraphQLObjectType({
                         .then(response => response.json())
                 ),
         },
-    },
+    }),
 });
 module.exports = schema;

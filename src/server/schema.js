@@ -9,7 +9,7 @@ const BASE_URL = 'http://localhost:4000/api';
 
 const query = new GraphQLObjectType({
     name: 'Query',
-    fields: {
+    fields: () => ({
         movies: {
             type: new GraphQLList(Movie),
             args: {
@@ -77,7 +77,7 @@ const query = new GraphQLObjectType({
                 fetch(`${BASE_URL}/genre/${args.id}`)
                     .then(response => response.json())
         },
-    },
+    }),
 });
 
 const schema = new GraphQLSchema({ query });
