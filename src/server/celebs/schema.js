@@ -15,8 +15,8 @@ const schema = new GraphQLObjectType({
                 year: { type: GraphQLInt },
                 title: { type: GraphQLString },
             },
-            resolve: (celeb, { year, title }) =>
-                fetch(`${BASE_URL}/movies?movieIds=${celeb.movies.join(',')}&year=${year || ''}&title=${title || ''}`)
+            resolve: ({ movies = []}, { year, title }) =>
+                fetch(`${BASE_URL}/movies?movieIds=${movies.join(',')}&year=${year || ''}&title=${title || ''}`)
                     .then(response => response.json()),
         },
     }),

@@ -1,6 +1,5 @@
 const graphql = require('graphql');
 const fetch = require('node-fetch');
-const Celeb = require('../celebs/schema');
 const Genre = require('../genres/schema');
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLInt, GraphQLList } = graphql;
 
@@ -13,20 +12,16 @@ const schema = new GraphQLObjectType({
         title: { type: GraphQLString },
         year: { type: GraphQLInt },
         cast: {
-            type: new GraphQLList(Celeb),
-            resolve: ({ cast }) =>
-                cast.map(celebId =>
-                    fetch(`${BASE_URL}/celebs/${celebId}`)
-                        .then(response => response.json())
-                ),
+            type: new GraphQLList(require('../celebs/schema')),
+            resolve: ({ cast = [] }) =>
+                fetch(`${BASE_URL}/celebs?celebIds=${cast.join(',')}`)
+                    .then(response => response.json()),
         },
         genres: {
             type: new GraphQLList(Genre),
-            resolve: ({ genres }) =>
-                genres.map(genreId =>
-                    fetch(`${BASE_URL}/genres/${genreId}`)
-                        .then(response => response.json())
-                ),
+            resolve: ({ genres = [] }) =>
+                fetch(`${BASE_URL}/genres?genreIds=${genres.join(',')}`)
+                    .then(response => response.json()),
         },
     }),
 });
