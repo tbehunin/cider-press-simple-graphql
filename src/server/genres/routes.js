@@ -4,7 +4,10 @@ const router = express.Router();
 router.get('/', function (req, res) {
     const genres = req.app.get('genres');
     const name = req.query.name;
-    const genreIds = (req.query.genreIds || '').split(',').map(id => parseInt(id));
+    const genreIds = (req.query.genreIds || '')
+        .split(',')
+        .filter(item => item !== '')
+        .map(id => parseInt(id));
     res.send(genres.filter(item =>
         (!name || item.name.toLowerCase().indexOf(name.toLowerCase()) !== -1) &&
         (genreIds.length === 0 || genreIds.find(id => id === item.id))

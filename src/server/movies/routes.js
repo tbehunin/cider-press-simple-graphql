@@ -5,7 +5,10 @@ router.get('/', function (req, res) {
     const movies = req.app.get('movies');
     const year = req.query.year && parseInt(req.query.year, 10);
     const title = req.query.title;
-    const movieIds = (req.query.movieIds || '').split(',').map(id => parseInt(id));
+    const movieIds = (req.query.movieIds || '')
+        .split(',')
+        .filter(item => item !== '')
+        .map(id => parseInt(id));
     res.send(movies.filter(item =>
         (!year || item.year === year) &&
         (!title || item.title.toLowerCase().indexOf(title.toLowerCase()) !== -1) &&
