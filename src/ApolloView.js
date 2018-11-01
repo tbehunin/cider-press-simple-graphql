@@ -5,6 +5,7 @@ import { Query } from "react-apollo";
 const query = gql`
 {
     movies (year: 2018) {
+        id
         title
         cast {
             name
@@ -25,7 +26,7 @@ export default class RestView extends React.Component {
                     return (
                         <ul>
                             {data.movies.map(item => (
-                                <li>{item.title}</li>
+                                <li key={item.id}>{item.title}</li>
                             ))}
                         </ul>
                     );
