@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors');
 const graphqlHTTP = require('express-graphql');
 const morgan = require('morgan');
 const data = require('./db/dataIndexer');
@@ -19,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.use('/api/movies', movieRoutes);
 app.use('/api/celebs', celebRoutes);
 app.use('/api/genres', genreRoutes);
-app.use('/graphql', graphqlHTTP({
+app.use('/graphql', cors(), graphqlHTTP({
   schema,
   graphiql: true,
 }));
